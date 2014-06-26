@@ -11,7 +11,7 @@ namespace Inedo.BuildMasterExtensions.Fake
     [ActionProperties(
        "Execute Fake",
        "Runs the Fake executable.")]
-    [Tag("F#"),Tag("FSharp"),Tag("FAKE")]
+    [Tag("F#"),Tag("FSharp"),Tag("FAKE"),Tag("Unit Testing"),Tag("Misc")]
     [CustomEditor(typeof(FakeActionEditor))]
     public sealed class FakeAction : AgentBasedActionBase
     {
@@ -85,15 +85,13 @@ namespace Inedo.BuildMasterExtensions.Fake
         {
             var args = new List<string>();
 
-            args.Add("--quiet");
-
             if (!string.IsNullOrEmpty(this.FakeFile))
-                args.Add(string.Format("--Fakefile \"{0}\"", this.FakeFile));
-
-            foreach (string variableValue in this.VariableValues ?? new string[0])
-                args.Add(string.Format("\"{0}\"", variableValue));
+                args.Add(string.Format("\"{0}\"", this.FakeFile));
 
             args.Add(this.Tasks ?? string.Empty);
+
+            foreach (string variableValue in this.VariableValues ?? new string[0])
+                args.Add(string.Format("--envvar \"{0}\"", variableValue));            
 
             return string.Join(" ", args.ToArray());
         }
