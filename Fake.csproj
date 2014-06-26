@@ -21,6 +21,8 @@
     <SccProvider>
     </SccProvider>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,20 +46,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BuildMaster.Web.Controls">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.3\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
     </Reference>
     <Reference Include="BuildMasterCore">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\BuildMasterCore.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.3\lib\net40\BuildMasterCore.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="InedoLib">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\InedoLib.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.3\lib\net40\InedoLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -79,6 +78,13 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
