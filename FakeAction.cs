@@ -11,7 +11,8 @@ namespace Inedo.BuildMasterExtensions.Fake
     [ActionProperties(
        "Execute Fake",
        "Runs the Fake executable.")]
-    [Tag("F#"),Tag("FSharp"),Tag("FAKE"),Tag("Unit Testing"),Tag("Misc")]
+    //[Tag("F#"),Tag("FSharp"),Tag("FAKE"),Tag("Unit Testing"),Tag("Misc")]
+    [Tag(Tags.DotNet)]
     [CustomEditor(typeof(FakeActionEditor))]
     public sealed class FakeAction : AgentBasedActionBase
     {
